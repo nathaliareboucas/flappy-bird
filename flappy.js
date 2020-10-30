@@ -15,10 +15,6 @@ function Barreira(reversa = false) {
 	this.setAltura = altura => (corpo.style.height = `${altura}px`);
 }
 
-// const b = new Barreira(true);
-// b.setAltura(200);
-// document.querySelector('[wm-flappy]').appendChild(b.elemento);
-
 function ParDeBarreiras(altura, abertura, posicaoX) {
 	this.elemento = novoElemento('div', 'par-de-barreiras');
 	this.superior = new Barreira(true);
@@ -43,9 +39,6 @@ function ParDeBarreiras(altura, abertura, posicaoX) {
 	this.sortearAbertura();
 	this.setPosicaoX(posicaoX);
 }
-
-// const b = new ParDeBarreiras(700, 200, 400);
-// document.querySelector('[wm-flappy]').appendChild(b.elemento);
 
 function Barreiras(altura, largura, abertura, espacoBarreiras, notificarPonto) {
 	this.pares = [
@@ -103,14 +96,37 @@ function Passaro(alturaJogo) {
 	this.setPosicaoY(alturaJogo / 2);
 }
 
-const barreiras = new Barreiras(700, 1200, 200, 400);
-const passaro = new Passaro(700);
-const areaJogo = document.querySelector('[wm-flappy]');
+function Progresso() {
+	this.elemento = novoElemento('span', 'progresso');
+	this.atualizarPontos = pontos => {
+		this.elemento.innerHTML = pontos;
+	};
 
-areaJogo.appendChild(passaro.elemento);
-barreiras.pares.forEach(par => areaJogo.appendChild(par.elemento));
+	this.atualizarPontos(0);
+}
 
-setInterval(() => {
-	barreiras.animar();
-	passaro.animar();
-}, 20);
+function FlappyBird() {
+	let pontos = 0;
+	const areaDoJogo = document.querySelector('[wm-flappy]');
+	const alturaJogo = areaDoJogo.clientHeight;
+	const larguraJogo = areaDoJogo.clientWidth;
+
+	const progresso = new Progresso();
+	const barreiras = new Barreiras(alturaJogo, larguraJogo, 200, 400, () => {
+		progresso.atualizarPontos(++pontos);
+	});
+	const passaro = new Passaro(alturaJogo);
+
+	areaDoJogo.appendChild(progresso.elemento);
+	areaDoJogo.appendChild(passaro.elemento);
+	barreiras.pares.forEach(par => areaDoJogo.appendChild(par.elemento));
+
+	this.start = () => {
+		const temporizador = setInterval(() => {
+			barreiras.animar();
+			passaro.animar();
+		}, 20);
+	};
+}
+
+new FlappyBird().start();
