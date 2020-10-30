@@ -128,14 +128,47 @@ function colidiu(passaro, barreiras) {
 	return colidiu;
 }
 
+function removeItensJogo() {
+	const areaJogo = document.querySelector('[wm-flappy]');
+
+	const passaro = document.querySelector('.passaro');
+	const barreiras = document.querySelectorAll('.par-de-barreiras');
+	areaJogo.removeChild(passaro);
+	barreiras.forEach(par => areaJogo.removeChild(par));
+}
+
+function finalizarJogo() {
+	removeItensJogo();
+
+	const btnRestart = document.querySelector('.btn-start');
+	btnRestart.innerHTML = 'Restart';
+	btnRestart.style.fontSize = '50px';
+	btnRestart.style.display = 'block';
+}
+
+function temPontuacaoAnterior() {
+	const pontuacao = document.querySelector('.progresso');
+	return pontuacao !== null;
+}
+
+function removePontuacao() {
+	const areaJogo = document.querySelector('[wm-flappy]');
+	const pontuacao = document.querySelector('.progresso');
+	areaJogo.removeChild(pontuacao);
+}
+
 function FlappyBird() {
+	if (temPontuacaoAnterior()) {
+		removePontuacao();
+	}
+
 	let pontos = 0;
 	const areaDoJogo = document.querySelector('[wm-flappy]');
 	const alturaJogo = areaDoJogo.clientHeight;
 	const larguraJogo = areaDoJogo.clientWidth;
 
 	const progresso = new Progresso();
-	const barreiras = new Barreiras(alturaJogo, larguraJogo, 200, 400, () => {
+	const barreiras = new Barreiras(alturaJogo, larguraJogo, 180, 350, () => {
 		progresso.atualizarPontos(++pontos);
 	});
 	const passaro = new Passaro(alturaJogo);
@@ -151,9 +184,15 @@ function FlappyBird() {
 
 			if (colidiu(passaro, barreiras)) {
 				clearInterval(temporizador);
+				finalizarJogo();
 			}
 		}, 20);
 	};
 }
 
-new FlappyBird().start();
+function iniciar() {
+	const btnPlay = document.querySelector('.btn-start');
+	btnPlay.style.display = 'none';
+
+	const jogo = new FlappyBird().start();
+}

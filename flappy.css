@@ -7,19 +7,54 @@
 	src: url(./fonts/Pixel.ttf);
 }
 
+.container {
+	display: flex;
+	justify-content: center;
+}
+
+.start {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.start .btn-start {
+	color: #fff;
+	background: linear-gradient(90deg, #a5e82e, #639301);
+	font-family: Pixel;
+	border: none;
+	border-radius: 40px;
+	width: 200px;
+	height: 80px;
+	font-size: 60px;
+	box-shadow: 2px soli#fff;
+	box-shadow: inset 0 0 1em #377b14, 0 0 1em #218ffc;
+	z-index: 90;
+}
+
 [wm-flappy] {
 	position: relative;
 	border: 5px solid dodgerblue;
-	height: 700px;
-	width: 1200px;
+	height: 500px;
+	width: 900px;
 	margin: 15px;
-	background-color: skyblue;
+	background-color: #2ddbfc;
 	overflow: hidden;
+}
+
+#titulo {
+	font-family: Pixel;
+	font-size: 40px;
+	color: orangered;
+	margin-bottom: 0;
+	text-align: center;
 }
 
 .passaro {
 	position: absolute;
-	width: 60px;
+	width: 50px;
 	left: calc(50% - 30px);
 }
 
@@ -40,14 +75,14 @@
 
 .barreira .borda {
 	height: 30px;
-	width: 130px;
+	width: 110px;
 	background: linear-gradient(90deg, #639301, #a5e82e);
 	border: 2px solid #000;
 }
 
 .barreira .corpo {
 	height: 40px;
-	width: 110px;
+	width: 90px;
 	background: linear-gradient(90deg, #639301, #a5e82e);
 	border-left: 2px solid #000;
 	border-right: 2px solid #000;
@@ -58,7 +93,7 @@
 	top: 10px;
 	right: 10px;
 	font-family: Pixel;
-	font-size: 70px;
+	font-size: 60px;
 	color: #fff;
 	z-index: 100;
 }
